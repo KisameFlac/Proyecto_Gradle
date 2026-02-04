@@ -1,0 +1,1 @@
+[{"uid":"8307bdbe3d61c907","name":"Login exitoso en Herokuapp","time":{"start":1770231867588,"stop":1770231869477,"duration":1889},"status":"passed","severity":"normal"},{"uid":"f688c96b9296229d","name":"Manejo de carga dinámica con esperas explícitas","time":{"start":1770231853624,"stop":1770231867483,"duration":13859},"status":"passed","severity":"normal"}]
