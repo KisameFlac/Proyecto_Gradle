@@ -20,6 +20,10 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
 
+    testImplementation libs.jackson.databind
+
+    testImplementation libs.webdrivermanager
+
     // Esta línea conecta tu código con Selenium
     implementation libs.selenium.java
 
@@ -30,6 +34,8 @@ dependencies {
     
     // O si prefieres usar la versión que definiste en libs.versions.toml:
     testImplementation libs.allure.junit5
+
+    testImplementation libs.rest.assured
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
