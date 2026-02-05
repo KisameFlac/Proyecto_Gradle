@@ -2,12 +2,16 @@ package proyectos_gradle;
 
 import io.qameta.allure.Attachment; // Importación clave
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class AppTest {
     private WebDriver driver;
@@ -60,6 +64,20 @@ public class AppTest {
         String resultado = dynamicPage.getLoadedText();
         
         assertTrue(resultado.equals("Hello World!"), "El texto cargado no es correcto");
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/usuarios.csv", numLinesToSkip = 1) // numLinesToSkip = 1 se salta el encabezado
+    @DisplayName("Pruebas de Login con archivo CSV externo")
+    void testLoginConCSV(String usuario, String password, String mensajeEsperado) {
+        driver.get("https://the-internet.herokuapp.com/login");
+
+        driver.findElement(By.id("username")).sendKeys(usuario);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+
+        String mensajeActual = driver.findElement(By.id("flash")).getText();
+        assertTrue(mensajeActual.contains(mensajeEsperado));
     }
 
     @AfterEach
