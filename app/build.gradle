@@ -27,6 +27,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
+    
+    // O si prefieres usar la versión que definiste en libs.versions.toml:
+    testImplementation libs.allure.junit5
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

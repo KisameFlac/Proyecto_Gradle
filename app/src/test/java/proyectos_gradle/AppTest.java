@@ -1,20 +1,30 @@
 package proyectos_gradle;
 
+import io.qameta.allure.Attachment; // Importación clave
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AppTest {
+public class AppTest {
     private WebDriver driver;
 
     @BeforeEach
     void setup() {
-        // Esto se ejecuta ANTES de cada test
-        driver = new ChromeDriver();
+        org.openqa.selenium.chrome.ChromeOptions options = new org.openqa.selenium.chrome.ChromeOptions();
+        
+        // Si el test corre en GitHub Actions, no hay monitor, usamos modo headless
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+
+        driver = new org.openqa.selenium.chrome.ChromeDriver(options);
     }
 
     @Test
@@ -54,9 +64,15 @@ class AppTest {
 
     @AfterEach
     void tearDown() {
-        // Esto se ejecuta DESPUÉS de cada test, falle o pase
         if (driver != null) {
+            saveScreenshot(driver); // Toma la foto antes de cerrar
             driver.quit();
         }
+    }
+
+    // MÉTODO PARA ALLURE
+    @Attachment(value = "Screenshot", type = "image/png")
+    public byte[] saveScreenshot(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
