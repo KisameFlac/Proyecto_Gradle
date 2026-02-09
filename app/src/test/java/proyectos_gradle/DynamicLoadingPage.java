@@ -12,7 +12,6 @@ public class DynamicLoadingPage {
 
     // Localizadores
     private By startButton = By.cssSelector("#start button");
-    private By loadingBar = By.id("loading");
     private By loadedText = By.id("finish");
 
     public DynamicLoadingPage(WebDriver driver) {
