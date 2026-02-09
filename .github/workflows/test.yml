@@ -27,21 +27,29 @@ jobs:
 
     - name: Ejecutar Tests de Selenium
       run: ./gradlew :app:test --no-configuration-cache
-      continue-on-error: true # Permite generar el reporte aunque un test falle
+      continue-on-error: true 
+
+    # --- PASO DE DEBUG: Esto nos dirá exactamente dónde están los archivos ---
+    - name: Listar archivos para verificar rutas
+      run: |
+        echo "Buscando resultados de Allure..."
+        find . -name "allure-results" -type d
+      if: always()
 
     - name: Cargar historial de Allure
       uses: actions/checkout@v4
       if: always()
       with:
         ref: gh-pages
-        path: gh-pages-dir # Cambiamos el nombre de la carpeta de destino
+        path: gh-pages-dir
 
     - name: Generar reporte de Allure
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
+        # Probamos con la ruta estándar de módulos de Gradle
         allure_results: app/build/allure-results
-        gh_pages: gh-pages
+        gh_pages: gh-pages-dir
         allure_report: allure-report
         allure_history: allure-history
 
