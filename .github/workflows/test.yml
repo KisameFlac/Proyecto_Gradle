@@ -47,11 +47,12 @@ jobs:
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        # Probamos con la ruta estándar de módulos de Gradle
-        allure_results: app/build/allure-results
+        # Cambiamos la ruta a la que detectó el log de debug
+        allure_results: app/allure-results 
         gh_pages: gh-pages-dir
         allure_report: allure-report
         allure_history: allure-history
+        keep_reports: 20
 
     - name: Publicar reporte en GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
